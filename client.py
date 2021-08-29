@@ -11,12 +11,12 @@ def lamp():
 			command = client.recv(1024).decode("ascii")
 			if command == "ON":
 				GPIO.setup(18, GPIO.OUT)
-    			GPIO.output(18, GPIO.HIGH)
-    			print('Successfully set pin 18 up!')
-    			time.sleep(3)
-    			GPIO.output(18, GPIO.LOW)
-    			print('Successfully set pin 18 down!')
-    			GPIO.cleanup()
+				GPIO.output(18, GPIO.HIGH)
+				print('Successfully set pin 18 up!')
+				time.sleep(3)
+				GPIO.output(18, GPIO.LOW)
+				print('Successfully set pin 18 down!')
+				GPIO.cleanup()
 		except:
 			break
 
