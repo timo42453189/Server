@@ -1,16 +1,20 @@
 import socket
 import threading
+import RPi.GPIO as GPIO
+import time
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("192.168.178.78", 55553))
+client.connect(("192.168.178.78", 55555))
 
-def lamp():
+def device():
 	while True:
 		try:
+			command = ""
 			command = client.recv(1024).decode("ascii")
 			print(command)
 			if command == "ON":
+				GPIO.setmode(GPIO.BCM)
 				GPIO.setup(18, GPIO.OUT)
 				GPIO.output(18, GPIO.HIGH)
 				print('Successfully set pin 18 up!')
@@ -19,6 +23,7 @@ def lamp():
 				print('Successfully set pin 18 down!')
 				GPIO.cleanup()
 		except:
+			print("ERROR")
 			break
 
 def user():
@@ -34,8 +39,8 @@ def handle():
 	message = client.recv(1024).decode("ascii")
 	if message == "!USER":
 		client.send(type.encode("ascii"))
-	if type == "LAMP":		
-		lamp()
+	if type == "DEVICE":		
+		device()
 	else:
 		user()
 
