@@ -15,11 +15,9 @@ users = []
 
 def send(command, sender):
 	command_decodet = command.decode("ascii")
-#	if command_decodet == "ON" or command_decodet == "OFF":
-	for lamp in lamps:
-		lamp.send(command)
-#	else:
-#		sender.send("Invailed command".encode("ascii"))
+	if command_decodet == "ON" or command_decodet == "OFF":
+		for lamp in lamps:
+			lamp.send(command)
 
 def handle_users(client):
 	while True:
@@ -40,7 +38,7 @@ def connect():
 		print(f"New connection with {address}")
 		client.send("!USER".encode("ascii"))
 		name = client.recv(1024)
-		if name.decode("ascii") == "LAMP":
+		if name.decode("ascii") == "DEVICE":
 			lamps.append(client)
 			print("New Lamp addet")
 			client.send("Successfully addet lamp!".encode("ascii"))
